@@ -3,6 +3,7 @@ import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import dotenv from "dotenv";
+import "./config/db.js";
 
 dotenv.config({ path: ".env.dev" });
 
