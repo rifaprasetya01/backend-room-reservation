@@ -4,6 +4,7 @@ import { Server } from "socket.io";
 import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./config/db.js";
+import authRouter from "./routes/auth.route.js";
 
 dotenv.config({ path: ".env.dev" });
 
@@ -32,9 +33,13 @@ testConnection();
 app.use(cors());
 app.use(express.json());
 
+app.set("io", io);
+
 app.get("/ping", (req, res) => {
   res.send("PONG!");
 });
+
+app.use(authRouter);
 
 io.on("connection", (socket) => {
   console.log(`[Socket] Client terhubung: ${socket.id}`);
