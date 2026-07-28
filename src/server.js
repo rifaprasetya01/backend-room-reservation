@@ -3,7 +3,7 @@ import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import dotenv from "dotenv";
-import "./config/db.js";
+import pool from "./config/db.js";
 
 dotenv.config({ path: ".env.dev" });
 
@@ -16,6 +16,18 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
+
+async function testConnection() {
+  try {
+    const connection = await pool.getConnection();
+    console.log(`[Database] Berhasil terhubung ke database.`);
+    connection.release();
+  } catch (error) {
+    console.error("[Database] Gagal terhubung ke database:", error.message);
+  }
+}
+
+testConnection();
 
 app.use(cors());
 app.use(express.json());

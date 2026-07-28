@@ -14,16 +14,4 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
-async function testConnection() {
-  try {
-    const connection = await pool.getConnection();
-    console.log(`[Database] Berhasil terhubung ke database.`);
-    connection.release();
-  } catch (error) {
-    console.error("[Database] Gagal terhubung ke database:", error.message);
-  }
-}
-
-testConnection();
-
 export default pool;
