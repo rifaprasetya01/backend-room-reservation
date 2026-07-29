@@ -89,3 +89,20 @@ export const checkSession = async (req, res) => {
     });
   }
 };
+
+export const logout = async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      message: "Logout berhasil",
+      data: null,
+    });
+  } catch (error) {
+    const status = error.statusCode || 500;
+    res.status(status).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};

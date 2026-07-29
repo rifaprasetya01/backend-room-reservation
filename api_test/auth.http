@@ -26,3 +26,8 @@ Content-Type: application/json
 # @name check-session
 GET {{baseUrl}}/check-session
 Authorization: Bearer {{authToken}}
+
+### Logout pengguna
+# @name logout
+DELETE  {{baseUrl}}/logout
+Authorization: Bearer {{authToken}}
