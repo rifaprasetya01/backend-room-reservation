@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 const getUserByEmail = async (email) => {
   const [users] = await pool.query(
-    "SELECT (email) from users where email = ?",
+    "SELECT * from users where email = ?",
     [email],
   );
 
