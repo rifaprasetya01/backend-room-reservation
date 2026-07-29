@@ -1,4 +1,4 @@
-import { createUser } from "../services/auth.service.js";
+import { createUser, loginUser } from "../services/auth.service.js";
 
 export const register = async (req, res) => {
   try {
@@ -20,6 +20,33 @@ export const register = async (req, res) => {
     res.status(201).json({
       success: true,
       message: "Registrasi berhasil!",
+      data: response,
+    });
+  } catch (error) {
+    const status = error.statusCode || 500;
+    res.status(status).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+
+export const login = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      const error = new Error("Email wajib diisi.");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const response = await loginUser(email);
+
+    res.status(201).json({
+      success: true,
+      message: "Login berhasil!",
       data: response,
     });
   } catch (error) {

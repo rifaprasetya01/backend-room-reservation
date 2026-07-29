@@ -38,3 +38,21 @@ export const createUser = async (name, email) => {
 
   return { user: newUser, token: token };
 };
+
+export const loginUser = async (email) => {
+  const user = await getUserByEmail(email);
+
+  if (!user) {
+    const error = new Error("Email salah");
+    error.statusCode = 401;
+    throw error;
+  }
+
+  const token = jwt.sign(
+    { id: user.id, name: user.name, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" },
+  );
+
+  return { user, token };
+};

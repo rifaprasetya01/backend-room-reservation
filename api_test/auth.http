@@ -1,3 +1,4 @@
+# Register
 POST http://localhost:5555/register
 content-type: application/json
 
@@ -5,3 +6,15 @@ content-type: application/json
   "name": "Anisphia",
   "email": "anisphia@gmail.com"
 }
+
+###
+
+# Login
+POST http://localhost:5555/login
+Content-Type: application/json
+
+{
+  "email": "anisphia@gmail.com"
+}
+
+###
