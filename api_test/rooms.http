@@ -16,3 +16,8 @@ Content-Type: application/json
 # @name fetch-rooms
 GET {{baseUrl}}
 Authorization: Bearer {{authToken}}
+
+### Fetch Room by id
+# @name fetch-room-by-id
+GET {{baseUrl}}/5
+Authorization: Bearer {{authToken}}

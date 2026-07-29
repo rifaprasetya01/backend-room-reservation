@@ -7,3 +7,12 @@ export const getAllRooms = async () => {
 
   return rooms;
 };
+
+export const getRoomById = async (id) => {
+  const [rooms] = await pool.query(
+    "select id, name, capacity, status from rooms where id = ?",
+    [id],
+  );
+
+  return rooms[0] || null;
+};
