@@ -5,6 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./config/db.js";
 import authRouter from "./routes/auth.route.js";
+import roomRouter from "./routes/room.route.js";
 
 dotenv.config({ path: ".env.dev" });
 
@@ -40,6 +41,7 @@ app.get("/ping", (req, res) => {
 });
 
 app.use(authRouter);
+app.use(roomRouter);
 
 io.on("connection", (socket) => {
   console.log(`[Socket] Client terhubung: ${socket.id}`);

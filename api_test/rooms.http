@@ -1,0 +1,18 @@
+@baseUrl = http://localhost:5555/rooms
+
+### Login pengguna
+# @name login
+POST http://localhost:5555/login
+Content-Type: application/json
+
+{
+  "email": "euphy@gmail.com"
+}
+
+### Simpan token Login
+@authToken = {{login.response.body.data.token}}
+
+### Fetch All Rooms
+# @name fetch-rooms
+GET {{baseUrl}}
+Authorization: Bearer {{authToken}}
