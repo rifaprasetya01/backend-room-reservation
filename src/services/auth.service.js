@@ -1,17 +1,17 @@
 import pool from "../config/db.js";
 import jwt from "jsonwebtoken";
 
-const getUserByEmail = async (email) => {
+const getUserByKey = async (key) => {
   const [users] = await pool.query(
-    "SELECT * from users where email = ?",
-    [email],
+    "SELECT * from users where id = ? or email = ?",
+    [key, key],
   );
 
   return users[0] || null;
 };
 
 export const createUser = async (name, email) => {
-  const existingUser = await getUserByEmail(email);
+  const existingUser = await getUserByKey(email);
   if (existingUser) {
     const error = new Error("Email sudah terdaftar.");
     error.statusCode = 400;
@@ -40,7 +40,7 @@ export const createUser = async (name, email) => {
 };
 
 export const loginUser = async (email) => {
-  const user = await getUserByEmail(email);
+  const user = await getUserByKey(email);
 
   if (!user) {
     const error = new Error("Email salah");
@@ -55,4 +55,16 @@ export const loginUser = async (email) => {
   );
 
   return { user, token };
+};
+
+export const checkUserLogin = async (id) => {
+  const user = await getUserByKey(id);
+
+  if (!user) {
+    const error = new Error("Pengguna tidak tersedia");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  return user;
 };

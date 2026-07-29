@@ -1,4 +1,8 @@
-import { createUser, loginUser } from "../services/auth.service.js";
+import {
+  checkUserLogin,
+  createUser,
+  loginUser,
+} from "../services/auth.service.js";
 
 export const register = async (req, res) => {
   try {
@@ -44,9 +48,36 @@ export const login = async (req, res) => {
 
     const response = await loginUser(email);
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       message: "Login berhasil!",
+      data: response,
+    });
+  } catch (error) {
+    const status = error.statusCode || 500;
+    res.status(status).json({
+      success: false,
+      message: error.message,
+      data: null,
+    });
+  }
+};
+
+export const checkSession = async (req, res) => {
+  try {
+    const { id } = req.user;
+
+    if (!id) {
+      const error = new Error("Id tidak ditemukan.");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const response = await checkUserLogin(id);
+
+    res.status(200).json({
+      success: true,
+      message: "Pengguna ditemukan",
       data: response,
     });
   } catch (error) {

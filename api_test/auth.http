@@ -1,20 +1,28 @@
-# Register
-POST http://localhost:5555/register
+@baseUrl = http://localhost:5555
+
+### Registrasi pengguna baru
+# @name register
+POST {{baseUrl}}/register
 content-type: application/json
 
 {
-  "name": "Anisphia",
-  "email": "anisphia@gmail.com"
+  "name": "Euphy",
+  "email": "euphy@gmail.com"
 }
 
-###
-
-# Login
-POST http://localhost:5555/login
+### Login pengguna
+# @name login
+POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
   "email": "anisphia@gmail.com"
 }
 
-###
+### Simpan token Login
+@authToken = {{login.response.body.data.token}}
+
+### Cek sesi pengguna
+# @name check-session
+GET {{baseUrl}}/check-session
+Authorization: Bearer {{authToken}}
